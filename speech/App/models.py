@@ -106,6 +106,7 @@ class SpeechRecognitionHistory(models.Model):
     username = models.CharField(max_length=200,blank=False,null=False)
     email = models.EmailField(max_length=100,blank=False,null=False)
     microphone_no = models.CharField(max_length=200,default="0", blank=False,null=False)
+    image = models.ImageField(blank=True,null=True, upload_to="media/")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
