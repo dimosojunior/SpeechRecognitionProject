@@ -1,0 +1,10 @@
+django
+pillow
+pyotp
+
+
+SpeechRecognition
+pyaudio
+portaudio
+
+
