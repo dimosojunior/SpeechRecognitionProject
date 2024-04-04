@@ -11,7 +11,7 @@ import pyotp
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+import random
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 #C:\Users\DIMOSO JR\Desktop\ProjectWork\SmartInvigilation\SmartInvigilationProject\SmartInvigilationApp
@@ -27,15 +27,21 @@ def home(request):
 @login_required(login_url='home')
 def starting_page(request):
 
+
     return render(request, 'App/starting_page.html')
 
 
 @login_required(login_url='home')
 def speech_recognition(request):
     error_message =None
-    messages.info(request, f'SPEECH RECOGNITION SYSTEM')
+    
 
     if request.method == 'POST':
+
+        random.seed()
+        random_number = random.randint(1,100)
+        print(f"RandomNumber {random_number}")
+
         username = request.user.username
         email = request.user.email
         microphone_no = request.POST.get('microphone_no')
@@ -59,7 +65,7 @@ def speech_recognition(request):
 
         print("Start Speaking")
         #error_message = "Start Speaking!!"
-        messages.info(request, f'Hey {username} Start Speaking')
+        #messages.info(request, f'Hey {username} Start Speaking')
 
 
         with mic as source:
@@ -82,7 +88,7 @@ def speech_recognition(request):
             return redirect("starting_page")
 
 
-        with open('my_speech.txt',mode='w') as file:
+        with open(BASE_DIR+f'/SpeechHistory/{random_number}.txt',mode='w') as file:
             file.write(result)
 
         print("It has stored speech into text in my file")

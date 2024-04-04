@@ -1,4 +1,12 @@
 import speech_recognition as sr
+import random
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+print(BASE_DIR)
+
+random.seed()
+random_number = random.randint(1,100)
+print(f"RandomNumber {random_number}")
 
 r = sr.Recognizer()
 
@@ -19,7 +27,7 @@ except sr.UnknownValueError:
 	exit("Unable to recognize speech! ")
 
 
-with open('my_speech.txt',mode='w') as file:
+with open(BASE_DIR+f'/SpeechHistory/{random_number}.txt',mode='w') as file:
 	file.write(result)
 
 print("It has stored speech into text in my file")

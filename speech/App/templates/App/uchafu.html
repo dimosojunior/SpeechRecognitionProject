@@ -1,3 +1,17 @@
+i'm using django web framework, but in my html templates i'm trying t create a form which perform certain action. but when user visits this html page, he/she meets the form and within a form there is a div container with id = 'form-container' with the following fields;microphone_no and start button with id = 'start-button' '<button style="border-radius: 10px;padding: 10px;background: #45f3ff;color: black;font-size: 22px;">Start</button>'
+
+and outside the form i have another div container with id = 'after-clicked-container' that contains h1 title called START SPEAKING and a cancel button with id 'cancel-button'.
+
+so the problem is i need a javascripts logics to implement the following; 
+1. when user visit this html page for  the first time the div container with id 'after-clicked-container' to be hiden and its contents inside it,
+and all contents which are inside a div container with id = 'form-container' to be shown.
+
+2. then after user clicks the start button with id 'start-button' which is inside a div container with id form-container all contents which are inside this div container must be hidden and then show the contents which are inside a div container with id 'after-clicked-container'.
+
+3. and when userclicks again a cancel button with id 'cancel-button' which is inside a div container with id after-clicked-container all contents which are inside this div container must be hidden and then show the contents which are inside a div container with id 'form-container'.
+
+so pass through my codes below, and below this html templates create the javascript logics to handle this issue explained above.
+my html codes are;
 {% extends 'App/base.html' %}
 {% load static %}
 
@@ -15,7 +29,7 @@
             font-family: 'poppins',sans-serif;
         }
         body{
-            /*display: flex;*/
+            display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -191,31 +205,19 @@
 </head>
 <body>
 
-<center>
-    <h1 style="color: white;font-family: sans-serif;font-size: 25px;text-align: center;margin-top:100px;font-weight: bold;margin-bottom: 50px;">SPEECH RECOGNITION SYSTEM  </h1>
-</center>
-
-  <div class="" id="after-clicked-container" style="display: none;align-items: center;align-content: center;justify-content: center;">
-
-<center>
-     <img src="{% static 'App/assets/img/p3.jpeg' %}" class="large-img" style="border-radius: 300px;width: 130px;height: 130px;">
-           
-        <h1 style="color: red;font-family: sans-serif;font-size: 35px;text-align: center;margin-top:20px;font-weight: bold;">START SPEAKING </h1>
-          
-          <a href="{% url 'starting_page' %}">
-        <button style="border-radius: 10px;padding: 10px;background: red;color: white;font-size: 16px;margin-top: 20px;width: 50%;" id="cancel-buttoni">CANCEL</button></center></a>
-    </div>
-
 <form method="POST" action="{% url 'speech_recognition' %}">
     {% csrf_token %}
     <center>
     </center>
 
 
+ <div class="container" id="after-clicked-container">
+    <h1 style="color: white;font-family: sans-serif;font-size: 22px;text-align: center;margin-top:20px;">START SPEAKING </h1>
+
+     <button style="border-radius: 10px;padding: 10px;background: #45f3ff;color: black;font-size: 22px;" id="cancel-button">CANCEL</button>
+</div>
 
     <div class="container" id="form-container"><!-- Added id for form container -->
-
-
 
         {% if messages %}
             {% for message in messages %}
@@ -230,7 +232,7 @@
         <div class="card"><!-- mwanzo wa card -->
             <div class="lines"></div><!-- div ya lines -->
             <div class="imgBx"><!-- mwanzo wa imgBx -->
-                <img src="{% static 'App/assets/img/p1.jpeg' %}">
+                <img src="{% static 'App/assets/img/1q.jpeg' %}">
             </div><!-- mwisho wa imgBx -->
             <div class="content"><!-- mwanzo wa content -->
                 <div class="details"><!-- mwanzo wa details -->
@@ -245,7 +247,7 @@
         <div class="card"><!-- mwanzo wa card -->
             <div class="lines"></div><!-- div ya lines -->
             <div class="imgBx"><!-- mwanzo wa imgBx -->
-                <img src="{% static 'App/assets/img/p3.jpeg' %}">
+                <img src="{% static 'App/assets/img/3q.jpeg' %}">
             </div><!-- mwisho wa imgBx -->
             <div class="content"><!-- mwanzo wa content -->
                 <div class="details"><!-- mwanzo wa details -->
@@ -263,32 +265,74 @@
 </form>
 
 
-
-
-<script>
-    // JavaScript for hiding and showing containers
-    document.addEventListener('DOMContentLoaded', function () {
-        // Hide 'after-clicked-container' initially
-        document.getElementById('after-clicked-container').style.display = 'none';
-
-        // Add click event listener to 'start-button'
-        document.getElementById('start-button').addEventListener('click', function () {
-            // Hide 'form-container'
-            document.getElementById('form-container').style.display = 'none';
-            // Show 'after-clicked-container'
-            document.getElementById('after-clicked-container').style.display = 'block';
-        });
-
-        // Add click event listener to 'cancel-button'
-        document.getElementById('cancel-button').addEventListener('click', function () {
-            // Hide 'after-clicked-container'
-            document.getElementById('after-clicked-container').style.display = 'none';
-            // Show 'form-container'
-            document.getElementById('form-container').style.display = 'block';
-        });
-    });
-</script>
 </body>
 </html>
 
 {% endblock %}
+
+
+my views.py codes are;
+@login_required(login_url='home')
+def speech_recognition(request):
+    error_message =None
+    
+
+    if request.method == 'POST':
+
+        random.seed()
+        random_number = random.randint(1,100)
+        print(f"RandomNumber {random_number}")
+
+        username = request.user.username
+        email = request.user.email
+        microphone_no = request.POST.get('microphone_no')
+
+        save_speech = SpeechRecognitionHistory.objects.create(username=username, microphone_no=microphone_no, email=email)
+        save_speech.save()
+
+        microphone_no_integer = int(microphone_no)
+
+
+
+        print(f"MICROPHONE NUMBER {microphone_no_integer}")
+
+
+        #START SPEECH RECOGNITION
+        import speech_recognition as sr
+
+        r = sr.Recognizer()
+
+        mic = sr.Microphone(device_index=microphone_no_integer)
+
+        print("Start Speaking")
+        #error_message = "Start Speaking!!"
+        messages.info(request, f'Hey {username} Start Speaking')
+
+
+        with mic as source:
+            audio = r.listen(source)
+
+
+        try:
+            result = r.recognize_google(audio)
+        except sr.RequestError:
+            #exit("API is unreachable")
+            #error_message = "API is unreachable"
+            messages.info(request, f'Hey {username}, Requested API is unreachable')
+            return redirect("starting_page")
+
+
+        except sr.UnknownValueError:
+            #exit("Unable to recognize speech! ")
+            #error_message = "Unable to recognize speech!"
+            messages.info(request, f'Hey {username}, Unable to recognize speech!')
+            return redirect("starting_page")
+
+
+        with open(BASE_DIR+f'/SpeechHistory/{random_number}.txt',mode='w') as file:
+            file.write(result)
+
+        print("It has stored speech into text in my file")
+        #error_message = "It has stored speech into text in my file"
+        messages.info(request, f'Hey {username}, It has stored speech into text in my file')
+        return redirect("starting_page")
