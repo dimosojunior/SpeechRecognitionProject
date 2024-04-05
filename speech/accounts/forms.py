@@ -51,18 +51,18 @@ class UserRegistrationForm(UserCreationForm):
 
 	)
 
-	Course = forms.ModelChoiceField(
-		queryset=Courses.objects.all(),
-		required=True,
-		label=False,
-		widget=forms.Select(attrs={'class': 'input'})
-	)
+	# Course = forms.ModelChoiceField(
+	# 	queryset=Courses.objects.all(),
+	# 	required=True,
+	# 	label=False,
+	# 	widget=forms.Select(attrs={'class': 'input'})
+	# )
 
-	Year = forms.ModelChoiceField(
-		queryset=Years.objects.all(),
-		required=True,
-		widget=forms.Select(attrs={'class': 'input'})
-	)
+	# Year = forms.ModelChoiceField(
+	# 	queryset=Years.objects.all(),
+	# 	required=True,
+	# 	widget=forms.Select(attrs={'class': 'input'})
+	# )
     
     
     
@@ -72,9 +72,8 @@ class UserRegistrationForm(UserCreationForm):
 	    "email",
 	    "username",
 	    "password1",
-	    "password2",
-	    "Course",
-	    "Year"
+	    "password2"
+	    
 	    
 
 	    

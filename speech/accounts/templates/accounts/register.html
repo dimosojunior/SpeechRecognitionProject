@@ -313,7 +313,7 @@ a:hover{
 <!-- 
       <img src="{% static 'App/assets/img/background.jpg' %}" class="large-img"> -->
       <marquee>
-      <h1 class="headerPolling">SPEECH RECOGNITION SYSTEM</h1>
+      <h1 class="headerPolling">PROGRAMU YA KUTAMBUA KISWAHILI</h1>
     </marquee>
     </div>
     <div class="login-content">
@@ -321,7 +321,7 @@ a:hover{
         {% csrf_token %}
       
          <img src="{% static 'App/assets/img/p3.jpeg' %}" class="large-img" style="border-radius: 300px;width: 130px;height: 130px;">
-        <h2 class="title" style="font-size: 20px;color: white;">Welcome Back</h2>
+        <h2 class="title" style="font-size: 20px;color: white;">KARIBU TENA</h2>
 
        
 
@@ -331,7 +331,7 @@ a:hover{
                     <i class="fas fa-user"></i>
                  </div>
                  <div class="div">
-                    <h5>Registration Number</h5>
+                    <h5>Namba Ya Usajili</h5>
                     <!-- <input type="number" name="username" class="input" required> -->
 
                     {{form.username}}
@@ -353,35 +353,7 @@ a:hover{
               </div>
 
 
-                <div class="input-div pass">
-                 <div class="i"> 
-                    <i class="fas fa-book"></i>
-                 </div>
-                 <div class="div">
-                  <!-- <h5>Course</h5> -->
-                    
-                    <!-- <input type="password" name="password" class="input" required> -->
-
-                    {{form.Course}}
-
-                 </div>
-              </div>
-
-
-                <div class="input-div pass">
-                 <div class="i"> 
-                    <i class="fas fa-book"></i>
-                 </div>
-                 <div class="div">
-
-                  <!-- <h5>Year</h5> -->
-                    
-                    <!-- <input type="password" name="password" class="input" required> -->
-
-                    {{form.Year}}
-
-                 </div>
-              </div>
+            
 
 
 
@@ -393,7 +365,7 @@ a:hover{
                     <i class="fas fa-lock"></i>
                  </div>
                  <div class="div">
-                    <h5>Password</h5>
+                    <h5>Nywira</h5>
                     <!-- <input type="password" name="password" class="input" required> -->
 
                     {{form.password1}}
@@ -406,7 +378,7 @@ a:hover{
                     <i class="fas fa-lock"></i>
                  </div>
                  <div class="div">
-                    <h5>Confirm Password</h5>
+                    <h5>Thibitisha Nywira</h5>
                     <!-- <input type="password" name="password2" class="input" required> -->
 
                      {{form.password2}}
@@ -442,7 +414,7 @@ a:hover{
         {% endfor %}
 
  <div style="display: flex;justify-content: space-around;">
-    <span style="color: white;font-weight: bold;">Already have an account?</span> <a href="{% url 'login' %}" style="color: white;text-decoration: none;"> Signin here</a>
+    <span style="color: white;font-weight: bold;">Teyari umejisajili?</span> <a href="{% url 'login' %}" style="color: white;text-decoration: none;"> Ingia</a>
  </div>
 
 

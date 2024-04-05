@@ -9,17 +9,17 @@ from django.conf import settings
 
 
 
-class Courses(models.Model):
-    CourseName = models.CharField(max_length=500)
+# class Courses(models.Model):
+#     CourseName = models.CharField(max_length=500)
 
-    def __str__(self):
-        return self.CourseName
+#     def __str__(self):
+#         return self.CourseName
 
-class Years(models.Model):
-    Name = models.CharField(max_length=500)
+# class Years(models.Model):
+#     Name = models.CharField(max_length=500)
 
-    def __str__(self):
-        return self.Name
+#     def __str__(self):
+#         return self.Name
 
 
 
@@ -68,8 +68,8 @@ class MyUser(AbstractBaseUser):
     last_name=models.CharField(verbose_name="last name", max_length=100, unique=False)
     phone=models.CharField(verbose_name="phone",default="+255", max_length=13)
 
-    Course = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True,null=True)
-    Year = models.ForeignKey(Years, on_delete=models.CASCADE, blank=True,null=True)
+    # Course = models.ForeignKey(Courses, on_delete=models.CASCADE, blank=True,null=True)
+    # Year = models.ForeignKey(Years, on_delete=models.CASCADE, blank=True,null=True)
     
     date_joined=models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login=models.DateTimeField(verbose_name="last login", auto_now=True)
@@ -105,8 +105,9 @@ class SpeechRecognitionHistory(models.Model):
 
     username = models.CharField(max_length=200,blank=False,null=False)
     email = models.EmailField(max_length=100,blank=False,null=False)
-    microphone_no = models.CharField(max_length=200,default="0", blank=False,null=False)
-    image = models.ImageField(blank=True,null=True, upload_to="media/")
+    # microphone_no = models.CharField(max_length=200,default="0", blank=False,null=False)
+    # image = models.ImageField(blank=True,null=True, upload_to="media/")
+    speech_files = models.FileField(blank=True,null=True, upload_to="files/")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

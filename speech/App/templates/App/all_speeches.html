@@ -23,25 +23,28 @@
             /*background: #333;*/
         }
         .container{
-            position: relative;
-            display: flex;
+           
+            
             /*padding: 80px 40px;*/
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap:80px;
+           
             margin-top: 15px;
             
         }
 
      .display-text{
-        height: 400px;
-        background-color: white;
+        
+        background-color: #333;
         /*margin-right: 150px;
         margin-left: 150px;*/
-        border-radius: 15px;
         border-width: 2px;
-        border-color: black;
+        border-color: white;
+        border: 1px solid white;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 10px;
+        
      }
     </style>
 </head>
@@ -66,71 +69,38 @@
  
     <!-- mwanzo wa row -->
      <div class="row " style="width: 100%;">
-        <div class="col-md-12 display-text">
-            
-        
 
-       <h3 style="color: black;font-size: 16px;font-family: bold;padding: 15px;">
-           {{speech_text}}
-       </h3></div>
+        {% if speeches %}
+        {% for x in speeches %}
+        <div class="col-md-4 display-text">
+            
+         <img src="{% static 'App/assets/img/p1.jpeg' %}" class="large-img" style="border-radius: 300px;width: 70px;height: 70px;margin-bottom: 15px;">
+
+         <h3 style="color: red;font-weight: bold;font-size: 16px;">Created By: <span style="color: white;font-weight: bold;font-size: 16px;margin-left: 20px;">{{x.username}}</span></h3>
+
+         <h3 style="color: red;font-weight: bold;font-size: 16px;">Date: <span style="color: white;font-weight: bold;font-size: 16px;margin-left: 20px;">{{x.created}}</span></h3>
+         {% if x.speech_files %}
+      <a href="{{x.speech_files.url}}">
+       <button style="border-radius: 10px;padding: 10px;background: blue;color: white;font-size: 16px;margin-top: 15px;margin-right: 20px;">View</button> </a>
+
+    <a href="{{x.speech_files.url}}" download>
+      <button style="border-radius: 10px;padding: 10px;background: green;color: white;font-size: 16px;margin-top: 15px;">Download</button>
+   </a>{% endif %}
+   </div>
+
+   {% endfor %}
+
+   {% else %}
+   <center>
+       <h1 style="font-size: 16px;color: white;font-weight: bold;">There is no any speech created</h1>
+   </center>
+
+   {% endif %}
          
      </div>
      <!-- mwisho wa row -->
      </div>
  
-
-<form method="POST" action="{% url 'speech_recognition' %}">
-    {% csrf_token %}
-    <center>
-    </center>
-
-
-
-
-
-    <div class="container" id="form-container"><!-- Added id for form container -->
-
-   <center>
-       <button style="border-radius: 10px;padding: 10px;background: #45f3ff;color: black;font-size: 16px;" id="start-button">Zungumza Kiswahili</button>
-   </center>
-
-
-    </div>
-
-</form>
-
-
-<div class="container"> 
-     {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <h3 style="color: red;font-size: 14px;font-weight: bold;">{{message}}</h3><br>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <br>
-            {% endfor %}
-        {% endif %}
-</div>
-
- <div class="container" id="after-clicked-container"><!-- Added id for form container -->
-
-   <center>
-    <!-- <h1 style="color: white;font-family: sans-serif;font-size: 20px;text-align: center;margin-top:10px;font-weight: bold;margin-bottom: 15px;">ANZA KUZUNGUMZA </h1> 
- -->
- 
-    <img src="{% static 'App/assets/img/p3.jpeg' %}" class="large-img" style="border-radius: 100px;width: 80px;height: 80px;"><br>
-
-    <a href="{% url 'home' %}" style="margin-left: 0px;">
-       <button style="border-radius: 8px;padding: 8px;background: red;color: white;font-size: 16px;margin-top: 10px;" id="cancel-buttoni">Sitisha Kuzungumza</button></a><br>
-
-
-
-
-   </center>
-
-
-    </div>
-
 
 
 
